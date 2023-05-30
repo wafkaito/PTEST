@@ -9,29 +9,26 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-
-
 class TestLoginLogout():
+    def setup_method(self, method):
+        self.driver = webdriver.Chrome()
+        self.vars = {}
 
-def setup_method(self, method):
-  self.driver = webdriver.Chrome()
-  self.vars = {}
+    def teardown_method(self, method):
+        self.driver.quit()
 
-def teardown_method(self, method):
-  self.driver.quit()
-
-  def test_loginLogout(self):
-    self.driver.get("https://www.efinancethai.com/")
-    self.driver.set_window_size(1632, 962)
-    self.driver.find_element(By.ID, "txtbrokerUser").send_keys("98-dj_it3")
-    self.driver.find_element(By.ID, "txtbrokerPass").send_keys("0000")
-    self.driver.find_element(By.ID, "txtbrokerUser").click()
-    self.driver.find_element(By.ID, "form1").click()
-    self.driver.find_element(By.ID, "txtbrokerUser").send_keys("98-soonthorn")
-    self.driver.find_element(By.ID, "txtbrokerPass").send_keys("123456")
-    self.driver.find_element(By.ID, "txtbrokerPass").send_keys(Keys.ENTER)
-element = self.driver.find_element(By.LINK_TEXT, "กุนซือโลกการเงิน")
-actions = ActionChains(self.driver)
-actions.move_to_element(element).perform()
-self.driver.find_element(By.ID, "btnLogout").click()
+    def test_loginLogout(self):
+        self.driver.get("https://www.efinancethai.com/")
+        self.driver.set_window_size(1632, 962)
+        self.driver.find_element(By.ID, "txtbrokerUser").send_keys("98-dj_it3")
+        self.driver.find_element(By.ID, "txtbrokerPass").send_keys("0000")
+        self.driver.find_element(By.ID, "txtbrokerUser").click()
+        self.driver.find_element(By.ID, "form1").click()
+        self.driver.find_element(By.ID, "txtbrokerUser").send_keys("98-soonthorn")
+        self.driver.find_element(By.ID, "txtbrokerPass").send_keys("123456")
+        self.driver.find_element(By.ID, "txtbrokerPass").send_keys(Keys.ENTER)
+        element = self.driver.find_element(By.LINK_TEXT, "กุนซือโลกการเงิน")
+        actions = ActionChains(self.driver)
+        actions.move_to_element(element).perform()
+        self.driver.find_element(By.ID, "btnLogout").click()
   
