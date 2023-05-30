@@ -8,7 +8,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
 class TestLoginLogout():
     def setup_method(self, method):
         self.driver = webdriver.Chrome()
@@ -22,13 +24,21 @@ class TestLoginLogout():
         self.driver.set_window_size(1632, 962)
         self.driver.find_element(By.ID, "txtbrokerUser").send_keys("98-dj_it3")
         self.driver.find_element(By.ID, "txtbrokerPass").send_keys("0000")
-        self.driver.find_element(By.ID, "txtbrokerUser").click()
-        self.driver.find_element(By.ID, "form1").click()
+        time.sleep(2)
+        self.driver.find_element(By.ID, "txtbrokerPass").send_keys(Keys.ENTER)
+        time.sleep(5)
+        self.driver.find_element(By.ID, "txtbrokerUser").clear()
+        self.driver.find_element(By.ID, "txtbrokerPass").clear()
+        time.sleep(2)
         self.driver.find_element(By.ID, "txtbrokerUser").send_keys("98-soonthorn")
         self.driver.find_element(By.ID, "txtbrokerPass").send_keys("123456")
+        time.sleep(2)
         self.driver.find_element(By.ID, "txtbrokerPass").send_keys(Keys.ENTER)
+        time.sleep(5)
         element = self.driver.find_element(By.LINK_TEXT, "กุนซือโลกการเงิน")
         actions = ActionChains(self.driver)
+        time.sleep(2)
         actions.move_to_element(element).perform()
+        time.sleep(2)
         self.driver.find_element(By.ID, "btnLogout").click()
-  
+        time.sleep(2)
