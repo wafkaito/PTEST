@@ -21,7 +21,7 @@ class TestSam():
         ,"enableVNC": True
       }
    }
-    self.driver = webdriver.Remote(command_executor='http://localhost:4448/', desired_capabilities=capabilities)
+    self.driver = webdriver.Remote(command_executor='http://selenium-chrome:4444/', desired_capabilities=capabilities)
     self.vars = {}
   
   def teardown_method(self, method):
