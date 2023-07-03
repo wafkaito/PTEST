@@ -32,7 +32,7 @@ pipeline {
             steps {
                 // Send Line Notify message before the build starts
                 script {
-                    bat "curl %url% -H \"Authorization: Bearer %token%\" -F \"message=${message_Pre}\""
+                    bat "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message_Pre}\""
                 }
             }
         }
@@ -66,10 +66,10 @@ pipeline {
             script {
                 if (currentBuild.result == 'FAILURE') {
                     def message = "${jobName} Build #${buildNo} FAILED ${Job_url}/"
-                    bat "curl %url% -H \"Authorization: Bearer %token%\" -F \"message=${message}\""
+                    bat "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
                 } else if (currentBuild.result == 'SUCCESS') {
                     def message = "${jobName} Build #${buildNo} SUCCESS ${Job_url}/"
-                    bat "curl %url% -H \"Authorization: Bearer %token%\" -F \"message=${message}\""
+                    bat "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
                 }
             }
         }
