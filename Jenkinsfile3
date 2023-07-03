@@ -2,6 +2,13 @@ pipeline {
     agent any
 
     environment {
+        token = 'TDX7PFXhq2wM49FKMs0BBw65EMR9cUW5Sa8pL35NtkH'
+        jobName = "${JOB_NAME} ${BRANCH_NAME != null ? BRANCH_NAME : ''}"
+        buildNo = "${BUILD_NUMBER}"
+        Job_url = "${BUILD_URL}"
+        url = 'https://notify-api.line.me/api/notify'
+        url_monitor = '192.168.49.66:7901/'
+        message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
         allureReportPath = 'reports'
     }
 
@@ -10,6 +17,14 @@ pipeline {
             steps {
                 script {
                     allureReportPaths = []  // List to store Allure report paths
+                }
+            }
+        }
+        stage('Line Notify (pre build)') {
+            steps {
+                // Send Line Notify message before the build starts
+                script {
+                    bat "curl %url% -H \"Authorization: Bearer %token%\" -F \"message=${message_Pre}\""
                 }
             }
         }
