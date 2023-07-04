@@ -22,7 +22,7 @@ class TestSam():
         ,"enableVNC": True
       }
    }
-    self.driver = webdriver.Remote(command_executor='http://192.168.41.66:4445', desired_capabilities=capabilities)
+    self.driver = webdriver.Remote(command_executor='http://192.168.41.66:24444', desired_capabilities=capabilities)
     self.vars = {}
   
   def teardown_method(self, method):
