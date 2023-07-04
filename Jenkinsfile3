@@ -31,7 +31,7 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                sleep 10
+                sleep 2
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
                     sh 'pytest test_sampl.py --alluredir=Reports'
