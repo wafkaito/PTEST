@@ -7,7 +7,7 @@ pipeline {
         buildNo = "${BUILD_NUMBER}"
         Job_url = "${BUILD_URL}"
         url = 'https://notify-api.line.me/api/notify'
-        url_monitor = 'http://192.168.41.66:7901/'
+        url_monitor = 'http://192.168.41.66:27900/'
         message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
         allureReportPath = 'reports'
     }
