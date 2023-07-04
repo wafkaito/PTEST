@@ -13,13 +13,13 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
+        stage('AllureSetup') {
             steps {
-                // Clone the repository
-                git branch: 'main', url: 'https://github.com/wafkaito/PTEST.git'
+                script {
+                    allureReportPaths = []  // List to store Allure report paths
+                }
             }
         }
-        
         stage('Line Notify (pre build)') {
             steps {
                 // Send Line Notify message before the build starts
