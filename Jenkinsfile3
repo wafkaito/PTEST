@@ -13,14 +13,6 @@ pipeline {
     }
 
     stages {
-        stage('Initialize') {
-            steps {
-                script {
-                    allureReportPaths = []  // List to store Allure report paths
-                }
-            }
-        }
-
         stage('Clone Repository') {
             steps {
                 // Clone the repository
