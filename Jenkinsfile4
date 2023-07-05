@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    environment {
+        token = '7Go1ED7TEruJEVuik5ReTO97Dps7bGSBPMRNxpryQdQ '
+        jobName = "${JOB_NAME} ${BRANCH_NAME != null ? BRANCH_NAME : ''}"
+        buildNo = "${BUILD_NUMBER}"
+        Job_url = "${BUILD_URL}"
+        url = 'https://notify-api.line.me/api/notify'
+        url_monitor = 'http://192.168.41.66:27901/?password=secret'
+        message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
+        allureReportPath = 'reports'
+    }
+
+    stages {
+        stage('AllureSetup') {
+            steps {
+                script {
+                    allureReportPaths = []  // List to store Allure report paths
+                }
+            }
+        }
+        stage('Line Notify (pre build)') {
+            steps {
+                // Send Line Notify message before the build starts
+                script {
+                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message_Pre}\""
+                }
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                sleep 5
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    // Run pytest command and generate test result data
+                    sh 'pytest SUSCO.py --alluredir=Reports'
+                    
+                    // Append Allure report path to the list
+                    script {
+                        allureReportPaths.add("${allureReportPath}/")
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Publish accumulated Allure reports
+            allure([
+                includeProperties: false,
+                jdk: '',
+                results: allureReportPaths.collect { path -> [path: path] }
+            ])
+            
+            // Send Line Notify message based on build result
+            script {
+                if (currentBuild.result == 'FAILURE') {
+                    def message = "${jobName} Build #${buildNo} FAILED ${Job_url}/"
+                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
+                } else if (currentBuild.result == 'SUCCESS') {
+                    def message = "${jobName} Build #${buildNo} SUCCESS ${Job_url}/"
+                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
+                }
+            }
+        }
+    }
+}
