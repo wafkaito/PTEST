@@ -12,9 +12,9 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class Test1():
   def setup_method(self, method):
-    self.driver = webdriver.Chrome()
-    self.driver.maximize_window()
+    self.driver = webdriver.Remote(command_executor='http://192.168.41.66:24445', desired_capabilities=DesiredCapabilities.CHROME)
     self.vars = {}
+    self.driver.maximize_window()
   
   def teardown_method(self, method):
     self.driver.quit()
