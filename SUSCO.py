@@ -12,9 +12,9 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class Test1():
   def setup_method(self, method):
-    self.driver = webdriver.Remote(command_executor='http://192.168.41.66:24445', desired_capabilities=DesiredCapabilities.CHROME)
-    self.vars = {}
+    self.driver = webdriver.Remote(command_executor='http://localhost:4448', desired_capabilities=DesiredCapabilities.CHROME)
     self.driver.maximize_window()
+    self.vars = {}
   
   def teardown_method(self, method):
     self.driver.quit()
@@ -28,8 +28,8 @@ class Test1():
   
   def test_1(self):
     print("`set speed` is a no-op in code export, use `pause` instead")
+    time.sleep(10)
     self.driver.get("https://demo.irplus.in.th/Listed/susco/home.asp")
-    #self.driver.set_window_size(1936, 1056)
     self.driver.find_element(By.LINK_TEXT, "TH").click()
     time.sleep(5)
     self.driver.find_element(By.LINK_TEXT, "นักลงทุนสัมพันธ์").click()
