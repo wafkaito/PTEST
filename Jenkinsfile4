@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        token = '7Go1ED7TEruJEVuik5ReTO97Dps7bGSBPMRNxpryQdQ '
+        token = 'DZnyy741L7T6j9IWbrldx6Mur6LgZAtF7jNaQlodfjg'
         jobName = "${JOB_NAME} ${BRANCH_NAME != null ? BRANCH_NAME : ''}"
         buildNo = "${BUILD_NUMBER}"
         Job_url = "${BUILD_URL}"
