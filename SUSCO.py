@@ -13,7 +13,12 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 class Test1():
   def setup_method(self, method):
     capabilities = DesiredCapabilities.CHROME.copy()
-    capabilities['chromeOptions'] = {'args': ['headless']}
+        capabilities['chromeOptions'] = {
+            'args': ['headless'],
+            'prefs': {
+                'NoVNC': False
+                  }
+        }
     self.driver = webdriver.Remote(command_executor='http://192.168.1.39:4447', desired_capabilities=capabilities)
     self.driver.maximize_window()
     self.vars = {}
