@@ -12,15 +12,7 @@ pipeline {
                     allureReportPaths = []  // List to store Allure report paths
                 }
             }
-        }
-
-        stage('Clone Repository') {
-            steps {
-                // Clone the repository
-                git branch: 'main', url: 'https://github.com/wafkaito/PTEST.git'
-            }
-        }
-        
+        }  
         stage('Run Tests 1 ') {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
