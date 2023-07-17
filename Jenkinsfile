@@ -10,6 +10,7 @@ pipeline {
             steps {
                 script {
                     allureReportPaths = []  // List to store Allure report paths
+                    pip install -r requirements.txt
                 }
             }
         }  
@@ -17,7 +18,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
-                    bat 'pytest test_sample.py --alluredir=Reports'
+                    sh 'pytest test_sample.py --alluredir=Reports'
                     
                     // Append Allure report path to the list
                     script {
@@ -30,7 +31,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
-                    bat 'pytest test_sample.py --alluredir=Reports'
+                    sh 'pytest test_sample.py --alluredir=Reports'
                     
                     // Append Allure report path to the list
                     script {
@@ -43,7 +44,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
-                    bat 'pytest test_sample.py --alluredir=Reports'
+                    sh 'pytest test_sample.py --alluredir=Reports'
                     
                     // Append Allure report path to the list
                     script {
