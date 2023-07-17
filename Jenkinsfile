@@ -38,7 +38,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
-                    bat 'pytest test_sampl.py --alluredir=Reports'
+                    bat 'pytest test_sample.py --alluredir=Reports'
                     
                     // Append Allure report path to the list
                     script {
