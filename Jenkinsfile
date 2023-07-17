@@ -10,7 +10,7 @@ pipeline {
             steps {
                 script {
                     allureReportPaths = []  // List to store Allure report paths
-                    pip install -r requirements.txt
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }  
