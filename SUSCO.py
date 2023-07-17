@@ -16,9 +16,7 @@ class Test1():
         capabilities['chromeOptions'] = {
             'args': ['headless'],
             'prefs': {
-                'NoVNC': False
-                  }
-        }
+            'NoVNC': False}}
     self.driver = webdriver.Remote(command_executor='http://192.168.1.39:4447', desired_capabilities=capabilities)
     self.driver.maximize_window()
     self.vars = {}
