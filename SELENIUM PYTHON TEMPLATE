@@ -1,0 +1,26 @@
+ตัวอย่าง
+from selenium.webdriver.chrome.options import Options
+
+class TestEx():
+  def setup_method(self, method):
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')  # Enable headless mode
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    self.driver = webdriver.Remote(command_executor='http://10.99.20.121:4445',options=chrome_options)
+    self.vars = {}
+
+##หมายเลข1 ทำการเพิ่มimport
+from selenium.webdriver.chrome.options import Options
+
+##หมายเลข2 ทำการเพิ่มคำสั่ง
+    chrome_options = Options()
+    chrome_options.add_argument('--headless')  # Enable headless mode
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--disable-dev-shm-usage')
+    
+##หมายเลข3 && ##หมายเลข4 ทำการแก้ไขคำสั่งดังนี้
+-old
+self.driver = webdriver.Remote(command_executor='ip ที่ใส่ในselenium grid', desired_capabilities=DesiredCapabilities)  ##สำหรับดูจอ VNC
+-new
+self.driver = webdriver.Remote(command_executor='ip ที่ใส่ในselenium grid',options=chrome_options) ## disable NoVNC
