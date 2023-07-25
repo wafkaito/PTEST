@@ -16,7 +16,7 @@ class TestEx():
     chrome_options = Options()
     chrome_options.add_argument('--headless')  # Enable headless mode
     self.driver = webdriver.Remote(
-        command_executor='http://10.99.20.131:4445',
+        command_executor='http://10.99.20.131:4448',
         options=chrome_options
     )
     self.vars = {}
