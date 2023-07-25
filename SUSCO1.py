@@ -31,6 +31,7 @@ class Test1():
   
   def test_1(self):
     print("`set speed` is a no-op in code export, use `pause` instead")
+    time.sleep(3)
     self.driver.get("https://demo.irplus.in.th/Listed/susco/home.asp")
     self.driver.find_element(By.LINK_TEXT, "TH").click()
     time.sleep(5)
