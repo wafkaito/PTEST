@@ -15,7 +15,7 @@ class TestEx():
   def setup_method(self, method):
     # chrome_options = Options()
     # chrome_options.add_argument('--headless')  # Enable headless mode
-    self.driver = webdriver.Remote(command_executor='http://10.99.20.121:4445', desired_capabilities=DesiredCapabilities)
+    self.driver = webdriver.Remote(command_executor='http://10.99.20.131:4445', desired_capabilities=DesiredCapabilities)
     self.vars = {}
   
   def teardown_method(self, method):
