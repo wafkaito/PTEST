@@ -44,7 +44,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
-                    sh 'pytest test3/test_ex.py --alluredir=Reports'
+                    sh 'pytest SUSCO.py --alluredir=Reports'
                     
                     // Append Allure report path to the list
                     script {
