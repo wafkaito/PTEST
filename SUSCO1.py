@@ -15,7 +15,7 @@ class Test1():
   def setup_method(self, method):
         chrome_options = Options()
         chrome_options.add_argument('--headless')
-        self.driver = webdriver.Remote(command_executor='http://10.99.20.131:4448', options=chrome_options)
+        self.driver = webdriver.Remote(command_executor='http://10.99.20.131:4445', options=chrome_options)
         self.driver.set_window_size(1920, 1080)
         self.driver.maximize_window()
         self.vars = {}
