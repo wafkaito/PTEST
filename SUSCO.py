@@ -12,7 +12,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 class Test1():
   def setup_method(self, method):
-        self.driver = webdriver.Remote(command_executor='http://10.99.20.131:4448', desired_capabilities=DesiredCapabilities.CHROME)
+        self.driver = webdriver.Remote(command_executor='http://10.99.20.131:4444', desired_capabilities=DesiredCapabilities.CHROME)
         self.driver.maximize_window()
         self.vars = {}
   
