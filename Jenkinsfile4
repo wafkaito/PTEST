@@ -35,7 +35,7 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
                     sh 'pip install -r requirements.txt'
-                    sh 'pytest SUSCO.py --alluredir=Reports'
+                    sh 'pytest SUSCO2.py --alluredir=Reports'
                 }
                     // Append Allure report path to the list
                     script {
@@ -58,7 +58,7 @@ pipeline {
             // Send Line Notify message based on build result
             script {
                 if (currentBuild.result == 'FAILURE') {
-                    def message = "${jobName} Build #${buildNo} FAILED ${Job_url}/"
+                    def message = "${jobName} Build #${buildNo} FAILED in stage '${failedStageName} . ${Job_url}/"
                     sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
                 } else if (currentBuild.result == 'SUCCESS') {
                     def message = "${jobName} Build #${buildNo} SUCCESS ${Job_url}/"
