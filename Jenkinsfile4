@@ -40,6 +40,7 @@ pipeline {
                     // Append Allure report path to the list
                     script {
                         allureReportPaths.add("${allureReportPath}/")
+                        failedStageName = currentBuild.rawBuild.getExecutor().getCurrentExecutable().getParent().getName()
                     }
             }
         }
