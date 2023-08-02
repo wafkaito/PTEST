@@ -10,6 +10,7 @@ pipeline {
         url_monitor = 'http://192.168.41.66:27901/?password=secret'
         message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
         allureReportPath = 'reports'
+        failedStageName = null // Variable to store the name of the failed stage
     }
 
     stages {
@@ -35,13 +36,22 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
                     sh 'pip install -r requirements.txt'
-                    sh 'pytest SUSCO2.py --alluredir=Reports'
+                    sh 'pytest SUSCO.py --alluredir=Reports'
                 }
-                    // Append Allure report path to the list
+                // Append Allure report path to the list
+                script {
+                    allureReportPaths.add("${allureReportPath}/")
+                }
+            }
+            post {
+                always {
                     script {
-                        allureReportPaths.add("${allureReportPath}/")
-                        failedStageName = currentBuild.rawBuild.getExecutor().getCurrentExecutable().getParent().getName()
+                        if (currentBuild.result == 'FAILURE') {
+                            // Store the failed stage name in the environment variable
+                            failedStageName = currentBuild.rawBuild.getExecutor().getCurrentExecutable().getParent().getName()
+                        }
                     }
+                }
             }
         }
     }
@@ -58,10 +68,10 @@ pipeline {
             // Send Line Notify message based on build result
             script {
                 if (currentBuild.result == 'FAILURE') {
-                    def message = "${jobName} Build #${buildNo} FAILED in stage '${failedStageName} . ${Job_url}/"
+                    def message = "${jobName} Build #${buildNo} FAILED in stage '${failedStageName}'. ${Job_url}/"
                     sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
                 } else if (currentBuild.result == 'SUCCESS') {
-                    def message = "${jobName} Build #${buildNo} SUCCESS ${Job_url}/"
+                    def message = "${jobName} Build #${buildNo} SUCCESS. ${Job_url}/"
                     sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
                 }
             }
