@@ -10,8 +10,10 @@ pipeline {
         url_monitor = 'http://192.168.41.66:27901/?password=secret'
         message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
         allureReportPath = 'reports'
-        failedStageName = null // Variable to store the name of the failed stage
     }
+
+    // Custom global variable to store the failed stage name
+    def failedStageName
 
     stages {
         stage('AllureSetup') {
@@ -36,7 +38,7 @@ pipeline {
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                     // Run pytest command and generate test result data
                     sh 'pip install -r requirements.txt'
-                    sh 'pytest SUSCO2.py --alluredir=Reports'
+                    sh 'pytest SUSCO.py --alluredir=Reports'
                 }
                 // Append Allure report path to the list
                 script {
@@ -47,7 +49,7 @@ pipeline {
                 always {
                     script {
                         if (currentBuild.result == 'FAILURE') {
-                            // Store the failed stage name in the environment variable
+                            // Store the failed stage name in the custom variable
                             failedStageName = currentBuild.rawBuild.getExecutor().getCurrentExecutable().getParent().getName()
                         }
                     }
@@ -65,7 +67,7 @@ pipeline {
                 results: allureReportPaths.collect { path -> [path: path] }
             ])
             
-            // Send Line Notify message based on build result
+            // Send Line Notify message based on build result and access the global variable
             script {
                 if (currentBuild.result == 'FAILURE') {
                     def message = "${jobName} Build #${buildNo} FAILED in stage '${failedStageName}'. ${Job_url}/"
