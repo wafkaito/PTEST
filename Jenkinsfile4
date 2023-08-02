@@ -66,4 +66,16 @@ pipeline {
             }
         }
     }
+    post {
+    failure {
+        script {
+            // Send additional Line Notify message indicating which stage has failed
+            if (currentBuild.currentResult == hudson.model.Result.FAILURE) {
+                def failedStage = currentBuild.currentExecutable.currentBuild.displayName
+                def failedStageMessage = "The '${failedStage}' stage failed."
+                sh "curl $url -H \"Authorization: Bearer $token\" -F \"message=${failedStageMessage}\""
+                }
+            }
+        }
+    }
 }
