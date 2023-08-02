@@ -37,10 +37,10 @@ pipeline {
                     sh 'pip install -r requirements.txt'
                     sh 'pytest SUSCO2.py --alluredir=Reports'
                 }
-                // Append Allure report path to the list
-                script {
-                    allureReportPaths.add("${allureReportPath}/")
-                }
+                    // Append Allure report path to the list
+                    script {
+                        allureReportPaths.add("${allureReportPath}/")
+                    }
             }
         }
     }
@@ -53,23 +53,16 @@ pipeline {
                 jdk: '',
                 results: allureReportPaths.collect { path -> [path: path] }
             ])
-        }
-        failure {
-            // Set the failedStageName environment variable when the build fails
+            
+            // Send Line Notify message based on build result
             script {
-                env.failedStageName = currentBuild.rawBuild.getExecutor().getCurrentExecutable().getParent().getName()
-            }
-            // Send Line Notify message based on build result and access the environment variable
-            script {
-                def message = "${jobName} Build #${buildNo} FAILED in stage '${env.failedStageName}'. ${Job_url}/"
-                sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
-            }
-        }
-        success {
-            // Send Line Notify message when the build succeeds
-            script {
-                def message = "${jobName} Build #${buildNo} SUCCESS. ${Job_url}/"
-                sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
+                if (currentBuild.result == 'FAILURE') {
+                    def message = "${jobName} Build #${buildNo} FAILED ${Job_url}/"
+                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
+                } else if (currentBuild.result == 'SUCCESS') {
+                    def message = "${jobName} Build #${buildNo} SUCCESS ${Job_url}/"
+                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
+                }
             }
         }
     }
