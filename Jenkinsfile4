@@ -55,15 +55,7 @@ pipeline {
             ])
             
             // Send Line Notify message based on build result
-            script {
-                if (currentBuild.result == 'FAILURE') {
-                    def message = "${jobName} Build #${buildNo} FAILED ${Job_url}/"
-                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
-                } else if (currentBuild.result == 'SUCCESS') {
-                    def message = "${jobName} Build #${buildNo} SUCCESS ${Job_url}/"
-                    sh "curl $url -H \"Authorization: Bearer $token \" -F \"message=${message}\""
-                }
-            }
+            
             script {
             if (currentBuild.currentResult == hudson.model.Result.FAILURE) {
                 def failedStage = currentBuild.currentExecutable.currentBuild.displayName
