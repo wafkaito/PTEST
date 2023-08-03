@@ -54,7 +54,7 @@ pipeline {
             script {
                 if (currentBuild.result == 'FAILURE') {
                     def message = "Build #${BUILD_NUMBER} of ${JOB_NAME} FAILED. Check the build status in the Jenkins job page: ${BUILD_URL}"
-                        sh "curl $url -H \"Authorization: Bearer $token\" -F \"message=${message}\""
+                        sh "curl $url -H \"Authorization: Bearer $token\" -F \"message=${message}\"-F "imageFile=/Reports/ *.png"
                         sh 'pwd'
                 } else if (currentBuild.result == 'SUCCESS') {
                     def message = "Build #${BUILD_NUMBER} of ${JOB_NAME} was SUCCESSFUL. Check the build status in the Jenkins job page: ${BUILD_URL}"
