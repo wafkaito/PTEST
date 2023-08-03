@@ -13,7 +13,7 @@ import allure
 
 class Test2():
   def setup_method(self, method):
-    self.driver = webdriver.Remote(command_executor='http//192.168.41.66:4444', desired_capabilities=DesiredCapabilities.CHROME)
+    self.driver = webdriver.Remote(command_executor='http://192.168.41.66:4444', desired_capabilities=DesiredCapabilities.CHROME)
     self.vars = {}
     self.driver.maximize_window()
   
