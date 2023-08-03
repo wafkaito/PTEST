@@ -40,7 +40,7 @@ pipeline {
                     // Append Allure report path to the list
                     script {
                         allureReportPaths.add("${allureReportPath}/")
-                        Name.add("Run Tests")
+                        
                     }
                     }
             }
