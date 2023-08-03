@@ -1,7 +1,6 @@
 
 pipeline {
     agent any
-    def Name = []
     environment {
         token = 'DZnyy741L7T6j9IWbrldx6Mur6LgZAtF7jNaQlodfjg'
         jobName = "${JOB_NAME} ${BRANCH_NAME != null ? BRANCH_NAME : ''}"
