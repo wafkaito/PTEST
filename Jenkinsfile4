@@ -11,7 +11,7 @@ pipeline {
         url_monitor = 'http://192.168.41.66:27901/?password=secret'
         message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
         allureReportPath = 'reports'
-        Name = "hello"
+        Name = []
     }
 
     stages {
@@ -41,7 +41,8 @@ pipeline {
                     // Append Allure report path to the list
                     script {
                         allureReportPaths.add("${allureReportPath}/")
-                        Name = "Run Tests"   
+                        if (currentBuild.result == 'FAILURE') {
+                        Name.add("Run Tests")}
                     }
                 }
             }
@@ -70,8 +71,7 @@ pipeline {
                     // Clean up the temporary directory after sending
                     sh "rm -rf temp_reports"
                     sh "rm -rf Reports"
-                    sh "Stage Names: ${Name}"
-                    sh echo "Some Text: ${SomeText}"
+                    sh echo"Stage Names: ${Name}"
                 } else if (currentBuild.result == 'SUCCESS') {
                     def message = "Build #${BUILD_NUMBER} of ${JOB_NAME} was SUCCESSFUL. Check the build status in the Jenkins job page: ${BUILD_URL}"
                     sh "curl $url -H \"Authorization: Bearer $token\" -F \"message=${message}\""
