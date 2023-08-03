@@ -10,7 +10,7 @@ pipeline {
         url_monitor = 'http://192.168.41.66:27901/?password=secret'
         message_Pre = "${jobName} Build #${buildNo} กำลังทดสอบ กดlink เพื่อดูจอแสดงผล ${url_monitor}"
         allureReportPath = 'reports'
-        Name = [123]
+        Name = ''
     }
 
     stages {
