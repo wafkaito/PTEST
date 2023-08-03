@@ -62,7 +62,7 @@ pipeline {
 
                     // Copy all .png image files to a temporary directory
                     sh "mkdir -p temp_reports"
-                    sh "cp reports/*.png temp_reports/"
+                    sh "cp Reports/*.png temp_reports/"
 
                     // Send all .png image files as attachments
                     sh "find temp_reports/ -name '*.png' -print0 | xargs -0 -I {} curl $url -H \"Authorization: Bearer $token\" -F \"message=See attachment\" -F \"imageFile=@{}\""
