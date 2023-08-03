@@ -46,14 +46,11 @@ pipeline {
 
     post {
         always {
-            post {
-        always {
-            // Publish accumulated Allure reports
             allure([
                 includeProperties: false,
                 jdk: '',
                 results: allureReportPaths.collect { path -> [path: path] }
-            ])}
+            ])
             script {
                 if (currentBuild.result == 'FAILURE') {
                     def message = "Build #${BUILD_NUMBER} of ${JOB_NAME} FAILED. Check the build status in the Jenkins job page: ${BUILD_URL}"
