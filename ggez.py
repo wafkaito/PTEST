@@ -10,7 +10,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import allure
-from SC import take_screenshot
 
 class Test2():
   def setup_method(self, method):
