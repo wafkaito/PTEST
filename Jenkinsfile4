@@ -61,7 +61,11 @@ pipeline {
                     sh "curl $url -H \"Authorization: Bearer $token\" -F \"message=${message}\""
 
                     // Send all .png image files in the Reports folder
-                    sh "find Reports/ -name '*.png' -print0 | xargs -0 -I {} curl $url -H \"Authorization: Bearer $token\" -F \"message= \" -F \"imageFile=@{}\""
+                    def imageFiles = sh(returnStdout: true, script: "find Reports/ -name '*.png' -print")
+                    imageFiles = imageFiles.trim()
+                    if (imageFiles) {
+                        sh "echo $imageFiles | xargs -I {} curl $url -H \"Authorization: Bearer $token\" -F \"message=See attachment\" -F \"imageFile=@{}\""
+                    }
                 } else if (currentBuild.result == 'SUCCESS') {
                     def message = "Build #${BUILD_NUMBER} of ${JOB_NAME} was SUCCESSFUL. Check the build status in the Jenkins job page: ${BUILD_URL}"
                     sh "curl $url -H \"Authorization: Bearer $token\" -F \"message=${message}\""
