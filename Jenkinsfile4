@@ -39,6 +39,10 @@ pipeline {
                     // Append Allure report path to the list
                     script {
                         allureReportPaths.add("${allureReportPath}/")
+                        def imageFiles = findFiles(glob: 'Reports/*.png')
+                        imageFiles.each { file ->
+                        sh "curl $url -H \"Authorization: Bearer $token\" -F \"message= \" -F \"imageFile=@${file}\""
+                    }
                     }
             }
         }
